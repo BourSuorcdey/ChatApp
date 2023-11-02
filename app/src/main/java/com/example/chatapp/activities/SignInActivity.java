@@ -14,8 +14,6 @@ import com.example.chatapp.utilities.PreferenceManager;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-
 public class SignInActivity extends AppCompatActivity {
 
     private ActivitySignInBinding binding;
