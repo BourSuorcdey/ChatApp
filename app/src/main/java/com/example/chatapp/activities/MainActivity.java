@@ -43,19 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadUserDetail() {
         String userName = preferenceManager.getString(Constants.KEY_NAME);
-        if (userName != null) {
-            binding.textName.setText(userName);
-        }
+            binding.textName.setText(userName != null ? userName : "");
+
         String userImage = preferenceManager.getString(Constants.KEY_IMAGE);
-        if (userImage != null) {
-            byte[] bytes = Base64.decode(userImage, Base64.DEFAULT);
-            if (bytes != null) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                if (bitmap != null) {
-                    binding.imageProfile.setImageBitmap(bitmap);
-                }
-            }
-        }
+        byte[] bytes = userImage != null ? Base64.decode(userImage, Base64.DEFAULT) : new byte[0];
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        binding.imageProfile.setImageBitmap(bitmap);
     }
 
     private void showToast(String massage) {

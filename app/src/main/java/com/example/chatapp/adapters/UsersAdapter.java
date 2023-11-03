@@ -59,7 +59,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     }
 
     private Bitmap getUserImage(String encodeImage) {
-        byte[] bytes = Base64.decode(encodeImage, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            byte[] bytes = (encodeImage != null && !encodeImage.isEmpty()) ? Base64.decode(encodeImage, Base64.DEFAULT) : new byte[0];
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 }
