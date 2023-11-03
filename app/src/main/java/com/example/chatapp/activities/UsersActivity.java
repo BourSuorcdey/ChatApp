@@ -3,6 +3,7 @@ package com.example.chatapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.chatapp.adapters.UsersAdapter;
@@ -53,6 +54,7 @@ public class UsersActivity extends AppCompatActivity {
                             user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
                             user.image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE);
                             user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
+                            Log.d("FCM", "message: " +user.name);
                             users.add(user);
                         }
                         if (users.size() > 0) {
