@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersActivity extends AppCompatActivity implements UserListener {
+public class UsersActivity extends AppCompatActivity implements UserListener{
 
     private ActivityUsersBinding binding;
     private PreferenceManager preferenceManager;
@@ -57,7 +57,6 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
                             user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
                             user.image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE);
                             user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
-                            Log.d("FCM", "message: " +user.name);
                             users.add(user);
                         }
                         if (users.size() > 0) {
@@ -72,7 +71,7 @@ public class UsersActivity extends AppCompatActivity implements UserListener {
     }
 
     private  void showErrorMessage() {
-        binding.textErrorMessage.setText(String.format("$s", "No user available"));
+        binding.textErrorMessage.setText(String.format("%s", "No user available"));
         binding.textErrorMessage.setVisibility(View.VISIBLE);
     }
 
