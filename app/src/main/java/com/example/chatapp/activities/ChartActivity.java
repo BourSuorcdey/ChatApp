@@ -62,26 +62,29 @@ public class ChartActivity extends AppCompatActivity {
     }
 
     private void sendMessage() {
-        HashMap<String, Object> message = new HashMap<>();
-        message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
-        message.put(Constants.KEY_RECEIVER_ID, recevierUser.id);
-        message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
-        message.put(Constants.KEY_TIMESTAMP, new Date());
-        database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
-        binding.inputMessage.setText(null);
+        if (recevierUser != null) {
+            HashMap<String, Object> message = new HashMap<>();
+            message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+            message.put(Constants.KEY_RECEIVER_ID, recevierUser.id);
+            message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
+            message.put(Constants.KEY_TIMESTAMP, new Date());
+            database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+            binding.inputMessage.setText(null);
+        }
     }
 
     private void listenMessages(){
-       if(recevierUser !=null ){
-           database.collection(Constants.KEY_COLLECTION_CHAT)
-                   .whereEqualTo(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
-                   .whereEqualTo(Constants.KEY_RECEIVER_ID,recevierUser.id)
-                   .addSnapshotListener(eventListener);
-           database.collection(Constants.KEY_COLLECTION_CHAT)
-                   .whereEqualTo(Constants.KEY_SENDER_ID,recevierUser.id)
-                   .whereEqualTo(Constants.KEY_RECEIVER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
-                   .addSnapshotListener(eventListener);
-       }
+        if (recevierUser != null) {
+            database.collection(Constants.KEY_COLLECTION_CHAT)
+                    .whereEqualTo(Constants.KEY_SENDER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
+                    .whereEqualTo(Constants.KEY_RECEIVER_ID,recevierUser.id)
+                    .addSnapshotListener(eventListener);
+            database.collection(Constants.KEY_COLLECTION_CHAT)
+                    .whereEqualTo(Constants.KEY_SENDER_ID,recevierUser.id)
+                    .whereEqualTo(Constants.KEY_RECEIVER_ID,preferenceManager.getString(Constants.KEY_USER_ID))
+                    .addSnapshotListener(eventListener);
+        }
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -115,14 +118,18 @@ public class ChartActivity extends AppCompatActivity {
     };
 
     private Bitmap getBitmapFromEncodeString(String encodeImage) {
-        byte[] bytes = Base64.decode(encodeImage, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        if (encodeImage != null) {
+            byte[] bytes = Base64.decode(encodeImage, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        } else {
+            // Handle the case when encodeImage is null (e.g., show a default image)
+            return null;
+        }
     }
 
     private void loadReceiverDetails() {
-        User receiverUser = (User) getIntent().getSerializableExtra(Constants.KEY_USER);
-        assert receiverUser != null;
-        binding.textName.setText(receiverUser.name);
+        recevierUser = (User) getIntent().getSerializableExtra(Constants.KEY_USER);
+        binding.textName.setText(recevierUser.name);
     }
 
     private void setListeners() {
