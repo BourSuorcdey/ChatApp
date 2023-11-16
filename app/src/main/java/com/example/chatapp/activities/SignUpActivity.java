@@ -86,6 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
                 });
     }
 
+
     private String encodeImage(Bitmap bitmap) {
         int previewWidth = 150;
         int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
